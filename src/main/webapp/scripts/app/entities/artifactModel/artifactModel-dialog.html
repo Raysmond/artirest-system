@@ -1,0 +1,103 @@
+<form name="editForm" role="form" novalidate ng-submit="save()">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="clear()">&times;</button>
+        <h4 class="modal-title" id="myArtifactModelLabel">Create or edit a ArtifactModel</h4>
+    </div>
+    <div class="modal-body">
+        <jh-alert-error></jh-alert-error>
+        <div class="form-group">
+            <label for="id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   ng-model="artifactModel.id" readonly/>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_name">Name</label>
+            <input type="text" class="form-control" name="name" id="field_name"
+                   ng-model="artifactModel.name" />
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_comment">Comment</label>
+            <input type="text" class="form-control" name="comment" id="field_comment"
+                   ng-model="artifactModel.comment" />
+        </div>
+        <hr/>
+        <div class="form-group">
+            <label class="control-label" >Attributes</label>
+            <div class="row">
+                <div class="col-sm-3"><input type="text" class="form-control" placeholder="Name" ng-model="attribute.name" /> </div>
+                <div class="col-sm-3"><input type="text" class="form-control" placeholder="Comment" ng-model="attribute.comment" /> </div>
+                <div class="col-sm-3">
+                    <!--<input type="text" class="form-control" placeholder="Type" ng-model="attribute.type" />-->
+                    <select class="form-control" ng-model="attribute.type" ng-options="type as type for type in attributeTypes"></select>
+                </div>
+                <div class="col-sm-3"><button type="button" class="btn btn-success" ng-click="addAttribute(attribute)">Add</button> </div>
+            </div>
+            <table class="table table-striped" ng-show="artifactModel.attributes.length > 0">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Comment</th>
+                        <th>Type</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tr ng-repeat="attribute in artifactModel.attributes">
+                    <td>{{attribute.name}}</td>
+                    <td>{{attribute.comment}}</td>
+                    <td>{{attribute.type}}</td>
+                    <td>
+                        <button type="button" class="btn btn-danger btn-xs" ng-click="removeAttribute(attribute)">Remove</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <hr/>
+        <div class="form-group">
+            <label class="control-label" >States</label>
+            <div class="row">
+                <div class="col-sm-3"><input type="text" class="form-control" placeholder="Name" ng-model="state.name" /> </div>
+                <div class="col-sm-3"><input type="text" class="form-control" placeholder="Comment" ng-model="state.comment" /> </div>
+                <div class="col-sm-2">
+                    <!--<input type="text" class="form-control" placeholder="Type" ng-model="attribute.type" />-->
+                    <select class="form-control" ng-model="state.type" ng-options="type as type for type in stateTypes"></select>
+                </div>
+                <div class="col-sm-2">
+                    <input class="form-control" ng-model="state.nextStates" placeholder="Next states" />
+                </div>
+                <div class="col-sm-2"><button type="button" class="btn btn-success" ng-click="addState(state)">Add</button> </div>
+            </div>
+            <table class="table table-striped" ng-show="artifactModel.states.length > 0">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Comment</th>
+                    <th>Type</th>
+                    <th>Next states</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tr ng-repeat="state in artifactModel.states">
+                    <td>{{state.name}}</td>
+                    <td>{{state.comment}}</td>
+                    <td>{{state.type}}</td>
+                    <td>
+                        <span class="label label-primary" ng-repeat="next in state.nextStates" style="margin-right: 5px;">{{next}}</span>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-danger btn-xs" ng-click="removeState(state)">Remove</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Save</span>
+        </button>
+    </div>
+</form>

@@ -1,0 +1,272 @@
+
+<div>
+    <h2><span>Process</span> {{process.id}}</h2>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th style="width: 150px;">Field</th>
+                <th>Value</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    <span>ID</span>
+                </td>
+                <td>
+                    <span class="form-control-static">{{process.id}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Name</span>
+                </td>
+                <td>
+                    <span class="form-control-static">{{process.name}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>IsRunning</span>
+                </td>
+                <td>
+                    <span class="form-control-static">{{process.isRunning}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>CreatedAt</span>
+                </td>
+                <td>
+                    <span class="form-control-static">{{process.createdAt | date:'medium'}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>UpdatedAt</span>
+                </td>
+                <td>
+                    <span class="form-control-static">{{process.updatedAt | date:'medium'}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td>Process model</td>
+                <td>
+                    <a href="/#/processModel/{{process.processModel.id}}">{{process.processModel.name}}</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+    <ul class="nav nav-tabs" ng-init="curTab = 'tab-1'">
+        <li ng-class="{'active': curTab === 'tab-1'}">
+            <a ng-click="curTab = 'tab-1'" > Artifacts</a>
+        </li>
+
+        <li ng-class="{'active': curTab === 'tab-2'}">
+            <a ng-click="curTab = 'tab-2'" > Logs</a>
+        </li>
+
+    </ul>
+
+    <div class="tab-content">
+        <div class="tab-item artifact-list" ng-show="curTab === 'tab-1'">
+            <div class="row">
+                <!--<div class="col-sm-12">-->
+                    <!-- <a class="btn btn-success" style="margin-right: 5px;" ng-repeat="artifact in instance.processModel.artifact" ng-click="createArtifact(artifact)">Create artifact ({{artifact.name}})</a> -->
+                    <!--<a ng-show="instance.artifacts.length == 0" class="btn btn-success" style="margin-right: 5px;" ng-click="createArtifact(instance.processModel.artifact[0])">Create artifact ({{instance.processModel.artifact[0].name}})</a>-->
+                <!--</div>-->
+                <div class="col-sm-12" >
+                    <div class="panel panel-default artifact">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">{{artifact.name || "Artifact"}}</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="row">
+                                        <div class="col-sm-12" ng-repeat="artifact in process.artifacts">
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading">Artifact {{artifact.name}}</div>
+                                                <div class="panel-body artifact-instance">
+                                                    <h4>Attributes</h4>
+                                                    <hr>
+                                                    <table class="table table-hover table-striped">
+                                                        <thead>
+                                                        <tr>
+                                                            <th>Name</th>
+                                                            <th>Comment</th>
+                                                            <th>Value</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        <tr>
+                                                            <td class="">id</td>
+                                                            <td class="">ID</td>
+                                                            <td class="comment">{{artifact.id}}</td>
+                                                        </tr>
+                                                        <tr ng-repeat="attr in artifact.attributes">
+                                                            <td class="">{{attr.name}}</td>
+                                                            <td class="">{{attr.comment}}</td>
+                                                            <td class="comment">
+                                                                <input class="form-control" type="text" name="{{artifact.name}}[{{attr.name}}]" value="{{attr.value}}" />
+                                                                <!-- <input ng-if="isDateAttr(attr.name)" class="form-control" type="text" name="{{artifact.name}}[{{attr.name}}]" value="{{attr.value | date: 'yyyy-MM-dd HH:mm:ss'}}" /> -->
+                                                            </td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+
+                                                    <hr>
+
+                                                    <span>Current state: </span>
+                                                    <span class="label label-warning">{{artifact.currentState}}</span>
+
+                                                    <hr>
+
+                                                    <h3>Life cycle</h3>
+                                                    <div id="myPalette-myDiagram-{{artifact.id}}" style="border: solid 1px #dedede; height: 200px; display: none;" ></div>
+                                                    <div id="myDiagram-{{artifact.id}}" style="border: solid 1px #ddd; height: 300px;"></div>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <h3>Available services</h3>
+                                    <hr>
+
+                                    <div ng-show="processIsEnd" class="alert alert-warning">
+                                        <span>This process instance already ended.</span>
+                                    </div>
+
+                                    <ul>
+                                        <li ng-repeat="service in availableServices">
+                                            <a href="javascript:;" ng-click="showService(service)">{{service.name}}</a>
+                                        </li>
+                                    </ul>
+
+                                    <div ng-show="currentService">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                {{currentService.name}}
+                                            </div>
+                                            <div class="panel-body">
+                                                <span>Bind URL: {{currentService.url}}</span>
+                                                <br/>
+
+                                                <span>Method: {{currentService.method}}</span>
+
+                                                <hr>
+                                                <form id="service-form-{{currentService.service.name}}" class="service-form">
+                                                    <table class="table table-hover table-bordered">
+                                                        <tbody>
+                                                        <tr>
+                                                            <td width="180">Artifact</td>
+                                                            <td>
+                                                                <select class="form-control" ng-model="currentArtifactForService" ng-options="(artifact.name + '(' + artifact.id + ')') for artifact in instance.artifacts">
+                                                                    <option value="">-- Choose an exsiting artifact --</option>
+                                                                </select>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td>ID</td>
+                                                            <td>
+                                                                <input type="text" class="form-control" ng-model="currentArtifactForService.id" disabled name="{{currentService.inputArtifact}}[id]" />
+                                                            </td>
+                                                        </tr>
+
+                                                        <!--<tr ng-repeat="param in currentService.inputParams">-->
+                                                        <!--<td>{{param}}</td>-->
+                                                        <!--<td>-->
+                                                        <!--<input type="text" class="form-control" ng-model="currentArtifactForService[param]" name="{{currentService.inputArtifact}}[{{param}}]"  />-->
+                                                        <!--</td>-->
+                                                        <!--</tr>-->
+
+                                                        <tr ng-repeat="attribute in currentArtifactForService.attributes" ng-if="isServiceParam(currentService, attribute.name)">
+                                                            <td>{{attribute.comment}}</td>
+                                                            <td>
+                                                                <input type="text" ng-model="attribute.value" class="form-control" />
+                                                            </td>
+                                                        </tr>
+
+
+                                                        <!--<tr class="param-row" ng-repeat="atom in currentService.rule.preConditions[0].atom">-->
+                                                        <!--<td ng-if="atom.type == 'ATTRIBUTE_DEFINED'">{{atom.attribute}}</td>-->
+                                                        <!--<td ng-if="atom.type == 'ATTRIBUTE_DEFINED'">-->
+                                                        <!--<input type="text" class="form-control" name="{{atom.artifact}}[{{atom.attribute}}]" value=""/>-->
+                                                        <!--</td>-->
+                                                        <!--</tr>-->
+
+                                                        <tr>
+                                                            <td>
+                                                                <a href="javascript:;" ng-click="addParam(currentService)">Add param</a>
+                                                            </td>
+                                                            <td><input type="button" ng-click="invokeService(currentService)" class="btn btn-primary" value="Submit"/></td>
+                                                        </tr>
+
+                                                        </tbody>
+                                                    </table>
+                                                </form>
+
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+
+                                    <div ng-show="serviceResult" id="service-result">
+                                        <span>Service result</span>
+                                        <pre>{{serviceResult}}</pre>
+                                    </div>
+
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="tab-item artifact-list" ng-show="curTab === 'tab-2'">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <table class="table table-hover table-striped ">
+                        <thead>
+                        <tr>
+                            <td class="name">ID</td>
+                            <td class="name">Title</td>
+                            <td class="name">Artifact id</td>
+                            <td class="name">Service</td>
+                            <td class="name">Timestamp</td>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        <tr ng-repeat="log in logs | orderBy:'createdAt':true">
+                            <td>{{log.id}}</td>
+                            <td>{{log.title}}</td>
+                            <td>{{log.artifactId}}</td>
+                            <td>{{log.service}}</td>
+                            <td>{{log.createdAt | date: 'yyyy-MM-dd HH:mm:ss'}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+</div>

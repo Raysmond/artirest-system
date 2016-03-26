@@ -1,0 +1,67 @@
+<div>
+    <h2>Logs</h2>
+    <jh-alert></jh-alert>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <button class="btn btn-primary" ui-sref="log.new">
+                    <span class="glyphicon glyphicon-flash"></span> <span>Create a new Log</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr jh-sort="predicate" ascending="reverse" callback="loadAll()">
+                    <th jh-sort-by="id"><span>ID</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="title"><span>Title</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="processId"><span>ProcessId</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="artifactId"><span>ArtifactId</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="fromState"><span>FromState</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="toState"><span>ToState</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="service"><span>Service</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="memo"><span>Memo</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="createdAt"><span>CreatedAt</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="type"><span>Type</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="log in logs track by log.id">
+                    <td><a ui-sref="log.detail({id:log.id})">{{log.id}}</a></td>
+                    <td>{{log.title}}</td>
+                    <td>{{log.processId}}</td>
+                    <td>{{log.artifactId}}</td>
+                    <td>{{log.fromState}}</td>
+                    <td>{{log.toState}}</td>
+                    <td>{{log.service}}</td>
+                    <td>{{log.memo}}</td>
+                    <td>{{log.createdAt | date:'medium'}}</td>
+                    <td translate="{{'artirestApp.LogType.' + log.type}}">{{log.type}}</td>
+                    <td>
+                        <button type="submit"
+                                ui-sref="log.detail({id:log.id})"
+                                class="btn btn-info btn-sm">
+                            <span class="glyphicon glyphicon-eye-open"></span>&nbsp;<span> View</span>
+                        </button>
+                        <button type="submit"
+                                ui-sref="log.edit({id:log.id})"
+                                class="btn btn-primary btn-sm">
+                            <span class="glyphicon glyphicon-pencil"></span>&nbsp;<span> Edit</span>
+                        </button>
+                        <button type="submit"
+                                ui-sref="log.delete({id:log.id})"
+                                class="btn btn-danger btn-sm">
+                            <span class="glyphicon glyphicon-remove-circle"></span>&nbsp;<span> Delete</span>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="text-center">
+        <uib-pagination class="pagination-sm" total-items="totalItems" ng-model="page" ng-change="loadAll()"></uib-pagination>
+    </div>
+</div>

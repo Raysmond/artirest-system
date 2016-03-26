@@ -1,0 +1,54 @@
+{
+    "relationships": [],
+    "fields": [
+        {
+            "fieldId": 1,
+            "fieldName": "title",
+            "fieldType": "String"
+        },
+        {
+            "fieldId": 2,
+            "fieldName": "processId",
+            "fieldType": "String"
+        },
+        {
+            "fieldId": 3,
+            "fieldName": "artifactId",
+            "fieldType": "String"
+        },
+        {
+            "fieldId": 4,
+            "fieldName": "fromState",
+            "fieldType": "String"
+        },
+        {
+            "fieldId": 5,
+            "fieldName": "toState",
+            "fieldType": "String"
+        },
+        {
+            "fieldId": 6,
+            "fieldName": "service",
+            "fieldType": "String"
+        },
+        {
+            "fieldId": 7,
+            "fieldName": "memo",
+            "fieldType": "String"
+        },
+        {
+            "fieldId": 8,
+            "fieldName": "createdAt",
+            "fieldType": "ZonedDateTime"
+        },
+        {
+            "fieldId": 9,
+            "fieldName": "type",
+            "fieldType": "LogType",
+            "fieldValues": "CREATE_PROCESS_INSTANCE,CREATE_ARTIFACT,UPDATE_ARTIFACT,STATE_TRANSITION,CALL_SERVICE,PROCESS_CLOSED"
+        }
+    ],
+    "dto": "no",
+    "service": "no",
+    "pagination": "pagination"
+}

@@ -1,0 +1,24 @@
+{
+  "generator-jhipster": {
+    "baseName": "artirest",
+    "packageName": "com.raysmond.artirest",
+    "packageFolder": "com/raysmond/artirest",
+    "authenticationType": "xauth",
+    "hibernateCache": "no",
+    "clusteredHttpSession": "no",
+    "websocket": "no",
+    "databaseType": "mongodb",
+    "devDatabaseType": "mongodb",
+    "prodDatabaseType": "mongodb",
+    "searchEngine": "no",
+    "useSass": true,
+    "buildTool": "gradle",
+    "frontendBuilder": "grunt",
+    "enableTranslation": false,
+    "enableSocialSignIn": false,
+    "rememberMeKey": "afb86aca29d60ddfa3d31acea80a30faf00ea75a",
+    "testFrameworks": [
+      "gatling"
+    ]
+  }
+}

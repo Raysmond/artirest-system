@@ -1,0 +1,34 @@
+{
+    "relationships": [],
+    "fields": [
+        {
+            "fieldId": 1,
+            "fieldName": "name",
+            "fieldType": "String"
+        },
+        {
+            "fieldId": 2,
+            "fieldName": "comment",
+            "fieldType": "String"
+        },
+        {
+            "fieldId": 3,
+            "fieldName": "status",
+            "fieldType": "Status",
+            "fieldValues": "DESIGNING,ENACTED"
+        },
+        {
+            "fieldId": 4,
+            "fieldName": "createdAt",
+            "fieldType": "ZonedDateTime"
+        },
+        {
+            "fieldId": 5,
+            "fieldName": "updatedAt",
+            "fieldType": "ZonedDateTime"
+        }
+    ],
+    "dto": "no",
+    "service": "serviceClass",
+    "pagination": "pagination"
+}

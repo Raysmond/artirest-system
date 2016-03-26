@@ -1,0 +1,98 @@
+
+<div>
+    <h2><span>ArtifactModel</span> {{artifactModel.id}}</h2>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Field</th>
+                <th>Value</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    <span>Name</span>
+                </td>
+                <td>
+                    <span class="form-control-static">{{artifactModel.name}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Comment</span>
+                </td>
+                <td>
+                    <span class="form-control-static">{{artifactModel.comment}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>CreatedAt</span>
+                </td>
+                <td>
+                    <span class="form-control-static">{{artifactModel.createdAt | date:'medium'}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>UpdatedAt</span>
+                </td>
+                <td>
+                    <span class="form-control-static">{{artifactModel.updatedAt | date:'medium'}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td>Attribtues</td>
+                <td>
+                    <table class="table table-striped" ng-show="artifactModel.attributes.length > 0">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Comment</th>
+                            <th>Type</th>
+                        </tr>
+                        </thead>
+                        <tr ng-repeat="attribute in artifactModel.attributes">
+                            <td>{{attribute.name}}</td>
+                            <td>{{attribute.comment}}</td>
+                            <td>{{attribute.type}}</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td>States</td>
+                <td>
+                    <table class="table table-striped" ng-show="artifactModel.states.length > 0">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Comment</th>
+                            <th>Type</th>
+                            <th>Next states</th>
+                        </tr>
+                        </thead>
+                        <tr ng-repeat="state in artifactModel.states">
+                            <td>{{state.name}}</td>
+                            <td>{{state.comment}}</td>
+                            <td>{{state.type}}</td>
+                            <td>
+                                <span class="label label-primary" ng-repeat="next in state.nextStates" style="margin-right: 5px;">
+                                    {{next}}
+                                </span>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <button type="submit"
+            onclick="window.history.back()"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+</div>

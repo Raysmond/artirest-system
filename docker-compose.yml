@@ -1,0 +1,27 @@
+# Interlock/HAProxy
+interlock:
+  image: ehazlett/interlock:latest
+  ports:
+    - "80:80"
+#  volumes:
+#    - /Users/Raysmond/.docker/machine/machines/aws-swarm-master:/etc/docker
+  command: "--swarm-url tcp://10.141.201.200:4000  --plugin haproxy start"
+
+web:
+    image: raysmond/artirest:lab
+    # mem_limit: 3G
+    environment:
+      - INTERLOCK_DATA={"hostname":"local","domain":"artirest.com","balance_algorithm":"uri depth 3"}
+      - SPRING_PROFILES_ACTIVE=prod
+    ports:
+      - "8080"
+#    links:
+#      - artirest-mongodb:artirest-mongodb
+
+mongo:
+    image: mongo:3.0.8
+    ports:
+      - "27017:27017"
+    # command: mongod --smallfiles
+    # volumes:
+    #   - ~/volumes/jhipster/artirest/dev-mongodb/:/data/db/

@@ -1,0 +1,87 @@
+
+<form name="editForm" role="form" novalidate ng-submit="save()">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="clear()">&times;</button>
+        <h4 class="modal-title" id="myLogLabel">Create or edit a Log</h4>
+    </div>
+    <div class="modal-body">
+        <jh-alert-error></jh-alert-error>
+        <div class="form-group">
+            <label for="id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                    ng-model="log.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_title">Title</label>
+            <input type="text" class="form-control" name="title" id="field_title"
+                    ng-model="log.title"
+                     />
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_processId">ProcessId</label>
+            <input type="text" class="form-control" name="processId" id="field_processId"
+                    ng-model="log.processId"
+                     />
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_artifactId">ArtifactId</label>
+            <input type="text" class="form-control" name="artifactId" id="field_artifactId"
+                    ng-model="log.artifactId"
+                     />
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_fromState">FromState</label>
+            <input type="text" class="form-control" name="fromState" id="field_fromState"
+                    ng-model="log.fromState"
+                     />
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_toState">ToState</label>
+            <input type="text" class="form-control" name="toState" id="field_toState"
+                    ng-model="log.toState"
+                     />
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_service">Service</label>
+            <input type="text" class="form-control" name="service" id="field_service"
+                    ng-model="log.service"
+                     />
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_memo">Memo</label>
+            <input type="text" class="form-control" name="memo" id="field_memo"
+                    ng-model="log.memo"
+                     />
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_createdAt">CreatedAt</label>
+            <input id="field_createdAt" type="text" class="form-control" uib-datepicker-popup="{{dateformat}}" ng-model="log.createdAt" is-open="datePickerForCreatedAt.status.opened"
+            />
+            <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="datePickerForCreatedAtOpen($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+            </span>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_type">Type</label>
+            <select class="form-control" name="type" ng-model="log.type" id="field_type">
+                <option value="CREATE_PROCESS_INSTANCE">CREATE_PROCESS_INSTANCE</option>
+                <option value="CREATE_ARTIFACT">CREATE_ARTIFACT</option>
+                <option value="UPDATE_ARTIFACT">UPDATE_ARTIFACT</option>
+                <option value="STATE_TRANSITION">STATE_TRANSITION</option>
+                <option value="CALL_SERVICE">CALL_SERVICE</option>
+                <option value="PROCESS_CLOSED">PROCESS_CLOSED</option>
+            </select>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Save</span>
+        </button>
+    </div>
+</form>
