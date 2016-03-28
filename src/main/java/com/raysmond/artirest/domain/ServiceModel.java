@@ -5,6 +5,7 @@ import com.raysmond.artirest.domain.enumeration.ServiceType;
 
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -14,7 +15,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Raysmond<i@raysmond.com>
  */
 @XmlRootElement(name = "service")
-public class ServiceModel {
+public class ServiceModel implements Serializable{
     public String name;
 
     public String url;

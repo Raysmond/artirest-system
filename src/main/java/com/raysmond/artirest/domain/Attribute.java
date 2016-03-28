@@ -2,10 +2,12 @@ package com.raysmond.artirest.domain;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
+import java.io.Serializable;
+
 /**
  * @author Raysmond<i@raysmond.com>
  */
-public class Attribute {
+public class Attribute implements Serializable{
     private String name;
     private String comment;
 

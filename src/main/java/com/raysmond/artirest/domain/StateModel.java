@@ -1,5 +1,6 @@
 package com.raysmond.artirest.domain;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -11,7 +12,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 
 @XmlRootElement(name = "state")
-public class StateModel {
+public class StateModel implements Serializable{
     public String name;
 
     public String comment;

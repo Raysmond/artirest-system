@@ -29,7 +29,7 @@ public class BusinessRuleModel implements Serializable {
     public Action action;
 
     @XmlRootElement(name = "condition")
-    public static class Condition {
+    public static class Condition implements Serializable{
         public ConditionType type;
 
         @XmlElementWrapper(name = "atoms")
@@ -57,7 +57,7 @@ public class BusinessRuleModel implements Serializable {
     }
 
     @XmlRootElement(name = "atom")
-    public static class Atom {
+    public static class Atom implements Serializable{
         public String artifact;
 
         public String attribute;
@@ -85,7 +85,7 @@ public class BusinessRuleModel implements Serializable {
     }
 
     @XmlRootElement(name = "action")
-    public static class Action {
+    public static class Action implements Serializable{
         public String name;
         public String service;
 
@@ -105,7 +105,7 @@ public class BusinessRuleModel implements Serializable {
     }
 
     @XmlRootElement(name = "transition")
-    public static class Transition {
+    public static class Transition implements Serializable{
         public String artifact;
 
         public String fromState;

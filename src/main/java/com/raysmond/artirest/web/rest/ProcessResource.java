@@ -102,6 +102,7 @@ public class ProcessResource {
 
         Process result = processService.invokeService(service, process, artifact);
         processService.afterInvokingService(result);
+        processService.cacheSave(process);
 
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
