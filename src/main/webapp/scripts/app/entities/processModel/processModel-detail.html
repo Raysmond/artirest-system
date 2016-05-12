@@ -5,7 +5,7 @@
         <table class="table table-striped">
             <thead>
             <tr>
-                <th>Field</th>
+                <th style="width:120px;">Field</th>
                 <th>Value</th>
             </tr>
             </thead>
@@ -39,7 +39,7 @@
                     <span>CreatedAt</span>
                 </td>
                 <td>
-                    <span class="form-control-static">{{processModel.createdAt | date:'medium'}}</span>
+                    <span class="form-control-static">{{processModel.createdAt | date:'yyyy-MM-dd HH:mm'}}</span>
                 </td>
             </tr>
             <tr>
@@ -47,7 +47,7 @@
                     <span>UpdatedAt</span>
                 </td>
                 <td>
-                    <span class="form-control-static">{{processModel.updatedAt | date:'medium'}}</span>
+                    <span class="form-control-static">{{processModel.updatedAt | date:'yyyy-MM-dd HH:mm'}}</span>
                 </td>
             </tr>
             </tbody>
@@ -76,26 +76,44 @@
     <div class="tab-content">
         <div class="tab-item artifact-list" ng-show="curTab === 'tab-1'">
             <div class="row">
-                <div class="col-sm-12" ng-repeat="artifact in processModel.artifacts">
-                    <div class="panel panel-default artifact">
+                <div class="col-sm-12" ng-repeat="artifact in processModel.artifacts" id="artifact-{{artifact.id}}">
+                    <div class="panel panel-default artifact" >
                         <div class="panel-heading">
                             <h3 class="panel-title">{{artifact.name}}</h3>
                         </div>
                         <div class="panel-body">
-
                             <table class="table table-hover ">
                                 <thead>
                                 <tr>
                                     <th>Name</th>
                                     <th>Type</th>
                                     <th>Comment</th>
+                                    <th></th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr ng-repeat="attr in artifact.attributes">
-                                    <td class="" style="width: 150px;">{{attr["name"]}}</td>
-                                    <td class="type" style="width: 120px;">{{attr["type"]}}</td>
-                                    <td class="comment">{{attr["comment"]}}</td>
+                                <tr class="artifact-attr" ng-repeat="attr in artifact.attributes">
+                                    <td class="" style="width: 200px;">
+                                        <span>{{attr.name}}</span>
+                                        <input style="display: none;" type="text" class="form-control" ng-model="attr.name" />
+                                    </td>
+                                    <td class="type" style="width: 200px;">
+                                        <span>{{attr.type}}</span>
+                                        <select style="display: none;" class="form-control" ng-options="item as item for item in attrTypes" ng-model="attr.type"></select>
+                                    </td>
+                                    <td class="comment">
+                                        <span>{{attr.comment}}</span>
+                                        <input style="display: none;" type="text" class="form-control" ng-model="attr.comment" />
+                                    </td>
+                                    <td style="width: 100px;">
+                                        <button type="button" onclick="$(this).parent().parent().find('td>span').toggle();$(this).parent().parent().find('td .form-control').toggle();" class="btn btn-sm btn-default">Edit</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><button class="btn btn-sm btn-primary" type="button" ng-click="saveArtifact(artifact)">Save Attributes</button></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -105,7 +123,7 @@
 
                             <hr>
 
-                            <span>Reference artifacts: {{artifact.referenceArtifacts}}</span>
+                            <!--<span>Reference artifacts: {{artifact.referenceArtifacts}}</span>-->
 
 
                         </div>

@@ -5,10 +5,10 @@ angular.module('artirestApp')
 
         $scope.processModels = [];
         $scope.predicate = 'id';
-        $scope.reverse = true;
+        $scope.reverse = false;
         $scope.page = 1;
         $scope.loadAll = function() {
-            ProcessModel.query({page: $scope.page - 1, size: 20, sort: [$scope.predicate + ',' + ($scope.reverse ? 'asc' : 'desc'), 'id']}, function(result, headers) {
+            ProcessModel.query({page: $scope.page - 1, size: 20, sort: [$scope.predicate + ',' + ($scope.reverse ? 'asc' : 'desc')]}, function(result, headers) {
                 $scope.links = ParseLinks.parse(headers('link'));
                 $scope.totalItems = headers('X-Total-Count');
                 $scope.processModels = result;

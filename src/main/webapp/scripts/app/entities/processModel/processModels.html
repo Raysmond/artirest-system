@@ -17,7 +17,6 @@
                 <tr jh-sort="predicate" ascending="reverse" callback="loadAll()">
                     <th jh-sort-by="id"><span>ID</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="name"><span>Name</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="comment"><span>Comment</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="status"><span>Status</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="createdAt"><span>CreatedAt</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="updatedAt"><span>UpdatedAt</span> <span class="glyphicon glyphicon-sort"></span></th>
@@ -28,10 +27,9 @@
                 <tr ng-repeat="processModel in processModels track by processModel.id">
                     <td><a ui-sref="processModel.detail({id:processModel.id})">{{processModel.id}}</a></td>
                     <td>{{processModel.name}}</td>
-                    <td>{{processModel.comment}}</td>
                     <td translate="{{'artirestApp.Status.' + processModel.status}}">{{processModel.status}}</td>
-                    <td>{{processModel.createdAt | date:'medium'}}</td>
-                    <td>{{processModel.updatedAt | date:'medium'}}</td>
+                    <td>{{processModel.createdAt | date:'yyyy-MM-dd HH:mm'}}</td>
+                    <td>{{processModel.updatedAt | date:'yyyy-MM-dd HH:mm'}}</td>
                     <td>
                         <button type="submit"
                                 ui-sref="processModel.detail({id:processModel.id})"

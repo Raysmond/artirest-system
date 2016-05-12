@@ -18,30 +18,35 @@
                     </a>
                 </li>
                 <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
-                <li ui-sref-active="active" ng-switch-when="true" class="dropdown pointer">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="">
-                        <span>
-                            <span class="glyphicon glyphicon-th-list"></span>
-                            <span class="hidden-sm">
-                                Entities
-                            </span>
-                            <b class="caret"></b>
-                        </span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li ui-sref-active="active" ><a ui-sref="artifactModel" data-toggle="collapse" data-target=".navbar-collapse.in"><span class="glyphicon glyphicon-asterisk"></span>
-                        &#xA0;<span >Artifact Models</span></a></li>
-                        <li ui-sref-active="active" ><a ui-sref="processModel" data-toggle="collapse" data-target=".navbar-collapse.in"><span class="glyphicon glyphicon-asterisk"></span>
-                        &#xA0;<span >Process Models</span></a></li>
-                        <li ui-sref-active="active" ><a ui-sref="process" data-toggle="collapse" data-target=".navbar-collapse.in"><span class="glyphicon glyphicon-asterisk"></span>
-                        &#xA0;<span >process</span></a></li>
-                        <li ui-sref-active="active" ><a ui-sref="artifact" data-toggle="collapse" data-target=".navbar-collapse.in"><span class="glyphicon glyphicon-asterisk"></span>
-                        &#xA0;<span >artifact</span></a></li>
-                        <li ui-sref-active="active" ><a ui-sref="log" data-toggle="collapse" data-target=".navbar-collapse.in"><span class="glyphicon glyphicon-asterisk"></span>
-                        &#xA0;<span >log</span></a></li>
-                        <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->
-                    </ul>
+                <li  ui-sref-active="active" ng-switch-when="true">
+                    <a ui-sref="processModel" data-toggle="collapse" data-target=".navbar-collapse.in">
+                        <span class="glyphicon glyphicon-th-list"></span>
+                    &#xA0;<span >Process Models</span></a>
                 </li>
+                <!--<li ui-sref-active="active" ng-switch-when="true" class="dropdown pointer">-->
+                    <!--<a class="dropdown-toggle" data-toggle="dropdown" href="">-->
+                        <!--<span>-->
+                            <!--<span class="glyphicon glyphicon-th-list"></span>-->
+                            <!--<span class="hidden-sm">-->
+                                <!--Entities-->
+                            <!--</span>-->
+                            <!--<b class="caret"></b>-->
+                        <!--</span>-->
+                    <!--</a>-->
+                    <!--<ul class="dropdown-menu">-->
+                        <!--<li ui-sref-active="active" ><a ui-sref="artifactModel" data-toggle="collapse" data-target=".navbar-collapse.in"><span class="glyphicon glyphicon-asterisk"></span>-->
+                        <!--&#xA0;<span >Artifact Models</span></a></li>-->
+                        <!--<li ui-sref-active="active" ><a ui-sref="processModel" data-toggle="collapse" data-target=".navbar-collapse.in"><span class="glyphicon glyphicon-asterisk"></span>-->
+                        <!--&#xA0;<span >Process Models</span></a></li>-->
+                        <!--<li ui-sref-active="active" ><a ui-sref="process" data-toggle="collapse" data-target=".navbar-collapse.in"><span class="glyphicon glyphicon-asterisk"></span>-->
+                        <!--&#xA0;<span >process</span></a></li>-->
+                        <!--<li ui-sref-active="active" ><a ui-sref="artifact" data-toggle="collapse" data-target=".navbar-collapse.in"><span class="glyphicon glyphicon-asterisk"></span>-->
+                        <!--&#xA0;<span >artifact</span></a></li>-->
+                        <!--<li ui-sref-active="active" ><a ui-sref="log" data-toggle="collapse" data-target=".navbar-collapse.in"><span class="glyphicon glyphicon-asterisk"></span>-->
+                        <!--&#xA0;<span >log</span></a></li>-->
+                        <!--&lt;!&ndash; jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here &ndash;&gt;-->
+                    <!--</ul>-->
+                <!--</li>-->
                 <li ng-class="{active: $state.includes('account')}" class="dropdown pointer">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="" id="account-menu">
                         <span>

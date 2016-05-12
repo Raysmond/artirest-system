@@ -30,6 +30,19 @@ angular.module('artirestApp')
                 });
         };
 
+        $scope.attrTypes = ['String','Long','Integer',"Double",'Float','Text','Date'];
+
+        $scope.saveArtifact = function(artifact){
+            console.log(artifact);
+        };
+
+        $scope.toggleEditAttr = function(artifact, attr){
+            var idx = artifact.attributes.indexOf(attr);
+            if(idx==-1) return;
+            var key = '#artifact-'+artifact.id + ' tr.artifact-attr';
+            var attrRow = $(key)[idx];
+        };
+
         $scope.createProcessInstance = function(){
             $http.post('/api/processModels/'+$scope.processModel.id+'/processes', {})
                 .then(function(res){
