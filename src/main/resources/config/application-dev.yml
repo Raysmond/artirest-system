@@ -20,7 +20,7 @@ spring:
             enabled: true # we use Grunt + BrowserSync for livereload
     data:
         mongodb:
-            host: localhost
+            host: artirest-mongodb
             port: 27017
             database: artirest
     mail:
@@ -30,7 +30,7 @@ spring:
     thymeleaf:
         cache: false
     redis:
-        host: 127.0.0.1
+        host: artirest-redis
         port: 6379
         password:
 

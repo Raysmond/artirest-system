@@ -8,18 +8,24 @@ interlock:
   command: "--swarm-url tcp://10.141.201.200:4000  --plugin haproxy start"
 
 web:
-    image: raysmond/artirest:lab
+    image: raysmond/artirest:0.0.1
     # mem_limit: 3G
     environment:
       - INTERLOCK_DATA={"hostname":"local","domain":"artirest.com","balance_algorithm":"uri depth 3"}
       - SPRING_PROFILES_ACTIVE=prod
     ports:
       - "8080"
-#    links:
-#      - artirest-mongodb:artirest-mongodb
+    links:
+      - mongo:artirest-mongodb
+      - redis:artirest-redis
+
+redis:
+    image: redis
+    ports:
+      - "6379:6379"
 
 mongo:
-    image: mongo:3.0.8
+    image: mongo:3.0.7
     ports:
       - "27017:27017"
     # command: mongod --smallfiles
