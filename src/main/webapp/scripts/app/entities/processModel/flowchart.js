@@ -241,10 +241,10 @@ function initFlowchart(name) {
               nodeTemplateMap: myDiagram.nodeTemplateMap,  // share the templates used by myDiagram
               model: new go.GraphLinksModel([  // specify the contents of the Palette
                   { category: "Start", text: "Start" },
-                  { text: "Step" },
-                  { text: "???", figure: "Diamond" },
-                  { category: "End", text: "End" },
-                  { category: "Comment", text: "Comment" }
+                  { text: "State" },
+                  //{ text: "???", figure: "Diamond" },
+                  { category: "End", text: "End" }
+                  //{ category: "Comment", text: "Comment" }
               ])
           });
 

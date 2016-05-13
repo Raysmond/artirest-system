@@ -1,7 +1,9 @@
 package com.raysmond.artirest.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import com.raysmond.artirest.domain.ArtifactModel;
 import com.raysmond.artirest.domain.ProcessModel;
+import com.raysmond.artirest.service.ArtifactModelService;
 import com.raysmond.artirest.service.ProcessCreateService;
 import com.raysmond.artirest.service.ProcessModelService;
 import com.raysmond.artirest.web.rest.util.HeaderUtil;
@@ -40,6 +42,9 @@ public class ProcessModelResource {
     @Autowired
     private ProcessCreateService processCreateService;
 
+    @Autowired
+    private ArtifactModelService artifactModelService;
+
     /**
      * POST  /processModels -> Create a new processModel.
      */
@@ -52,6 +57,10 @@ public class ProcessModelResource {
         if (processModel.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("processModel", "idexists", "A new processModel cannot already have an ID")).body(null);
         }
+        ArtifactModel artifact = new ArtifactModel();
+        artifact.setName("Artifact");
+        artifact = artifactModelService.save(artifact);
+        processModel.artifacts.add(artifact);
         ProcessModel result = processModelService.save(processModel);
         return ResponseEntity.created(new URI("/api/processModels/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert("processModel", result.getId().toString()))

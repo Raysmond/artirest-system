@@ -42,7 +42,7 @@ import javax.annotation.PreDestroy;
 import javax.inject.Inject;
 
 @Configuration
-@EnableCaching
+//@EnableCaching
 @AutoConfigureAfter(value = {MetricsConfiguration.class, DatabaseConfiguration.class})
 @Profile("!" + Constants.SPRING_PROFILE_FAST)
 public class CacheConfiguration {
