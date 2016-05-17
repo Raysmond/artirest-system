@@ -179,10 +179,20 @@
                             <td>
                                 <span ng-repeat="param in service.inputParams">{{param}}, </span>
                             </td>
+                            <td>
+                                <button class="btn btn-sm btn-primary" ng-click="editService(service)">
+                                    <span class="glyphicon glyphicon-edit"></span>
+                                </button>
+                                <button class="btn btn-sm btn-danger" ng-click="removeService(service)">
+                                    <span class="glyphicon glyphicon-remove"></span>
+                                </button>
+                            </td>
                         </tr>
                         </tbody>
                     </table>
-
+                    <div>
+                        <button ng-click="newService()" class="btn btn-sm btn-primary">Add</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -238,6 +248,7 @@
                         </tr>
                         </tbody>
                     </table>
+
                 </div>
             </div>
         </div>

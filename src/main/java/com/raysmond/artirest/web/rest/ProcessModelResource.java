@@ -3,6 +3,7 @@ package com.raysmond.artirest.web.rest;
 import com.codahale.metrics.annotation.Timed;
 import com.raysmond.artirest.domain.ArtifactModel;
 import com.raysmond.artirest.domain.ProcessModel;
+import com.raysmond.artirest.domain.ServiceModel;
 import com.raysmond.artirest.service.ArtifactModelService;
 import com.raysmond.artirest.service.ProcessCreateService;
 import com.raysmond.artirest.service.ProcessModelService;
@@ -18,6 +19,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
@@ -26,6 +28,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * REST controller for managing ProcessModel.
@@ -51,7 +54,6 @@ public class ProcessModelResource {
     @RequestMapping(value = "/processModels",
         method = RequestMethod.POST,
         produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
     public ResponseEntity<ProcessModel> createProcessModel(@RequestBody ProcessModel processModel) throws URISyntaxException {
         log.debug("REST request to save ProcessModel : {}", processModel);
         if (processModel.getId() != null) {
@@ -73,7 +75,6 @@ public class ProcessModelResource {
     @RequestMapping(value = "/processModels",
         method = RequestMethod.PUT,
         produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
     public ResponseEntity<ProcessModel> updateProcessModel(@RequestBody ProcessModel processModel) throws URISyntaxException {
         log.debug("REST request to update ProcessModel : {}", processModel);
         if (processModel.getId() == null) {
@@ -85,13 +86,26 @@ public class ProcessModelResource {
             .body(result);
     }
 
+    @RequestMapping(value = "/processModels/{id}/services",
+        method = RequestMethod.POST,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Transactional
+    public ResponseEntity<ProcessModel> saveProcessServices(@RequestBody Set<ServiceModel> serviceModels, @PathVariable String id) throws URISyntaxException {
+        ProcessModel processModel = processModelService.findOne(id);
+        processModel.services = serviceModels;
+        ProcessModel result = processModelService.save(processModel);
+
+        return ResponseEntity.ok()
+            .headers(HeaderUtil.createEntityUpdateAlert("processModel", processModel.getId().toString()))
+            .body(result);
+    }
+
     /**
      * GET  /processModels -> get all the processModels.
      */
     @RequestMapping(value = "/processModels",
         method = RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
     public ResponseEntity<List<ProcessModel>> getAllProcessModels(Pageable pageable)
         throws URISyntaxException {
         log.debug("REST request to get a page of ProcessModels");
@@ -106,7 +120,6 @@ public class ProcessModelResource {
     @RequestMapping(value = "/processModels/{id}",
         method = RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
     public ResponseEntity<ProcessModel> getProcessModel(@PathVariable String id) {
         log.debug("REST request to get ProcessModel : {}", id);
         ProcessModel processModel = processModelService.findOne(id);

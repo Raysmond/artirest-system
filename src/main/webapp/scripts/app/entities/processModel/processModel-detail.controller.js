@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('artirestApp')
-    .controller('ProcessModelDetailController', function ($scope, $rootScope, $stateParams, $timeout, $http, entity, ProcessModel,ArtifactModel, Process) {
+    .controller('ProcessModelDetailController', function ($scope, $rootScope, $state, $stateParams, $timeout, $http, $uibModal, entity, ProcessModel,ArtifactModel, Process) {
         $scope.processModel = entity;
         $scope.instances = {};
 
@@ -84,6 +84,67 @@ angular.module('artirestApp')
                 artifact.attributes.splice(idx,1);
                 //$scope.saveArtifact(artifact);
             }
+        };
+
+        $scope.editService = function(service){
+            var idx = $scope.processModel.services.indexOf(service);
+            $uibModal.open({
+                               templateUrl: 'scripts/app/entities/service/service-dialog.html',
+                               controller: 'ServiceDialogController',
+                               size: 'lg',
+                               resolve: {
+                                   entity: service
+                               }
+                           }).result.then(function(result) {
+                $scope.processModel.services[idx] = result;
+                $scope.saveServices();
+            }, function() {
+            });
+        };
+
+        $scope.newService = function(){
+            $uibModal.open({
+                               templateUrl: 'scripts/app/entities/service/service-dialog.html',
+                               controller: 'ServiceDialogController',
+                               size: 'lg',
+                               resolve: {
+                                   entity: function () {
+                                       return {
+                                           name: null,
+                                           method: null,
+                                           url: null,
+                                           inputArtifact: null,
+                                           outputArtifact: null,
+                                           inputParams: null,
+                                           id: null
+                                       };
+                                   }
+                               }
+                           }).result.then(function(result) {
+                var artifactName = $scope.processModel.artifacts[0].name;
+                result.inputArtifact = result.outputArtifact = artifactName;
+                if(!$scope.processModel.services)
+                    $scope.processModel.services = [];
+
+                $scope.processModel.services.push(result);
+                $scope.saveServices();
+            }, function() {
+            });
+        };
+
+        $scope.saveServices = function(){
+          $http.post('/api/processModels/'+$stateParams.id+'/services', $scope.processModel.services)
+              .then(function(res){}, function(res){});
+        };
+
+        $scope.removeService = function(service){
+          if(!confirm('Are you sure?'))
+          return;
+          var idx = $scope.processModel.services.indexOf(service);
+          if(idx !== -1){
+             $scope.processModel.services.splice(idx, 1);
+          }
+            $scope.saveServices();
         };
 
         $scope.toggleEditAttr = function(artifact, attr){
