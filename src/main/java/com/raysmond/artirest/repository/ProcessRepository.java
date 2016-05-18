@@ -18,4 +18,5 @@ public interface ProcessRepository extends MongoRepository<Process, String> {
 
     @Cacheable(value = ProcessService.CACHE_NAME)
     Process findOne(String id);
+
 }

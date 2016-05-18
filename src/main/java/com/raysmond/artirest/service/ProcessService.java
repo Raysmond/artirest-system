@@ -122,7 +122,6 @@ public class ProcessService {
         processRepository.delete(id);
     }
 
-
     public List<ServiceModel> availableServices(Process process) {
         List<ServiceModel> services = new ArrayList<>();
 

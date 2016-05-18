@@ -27,7 +27,10 @@
                 <tr ng-repeat="processModel in processModels track by processModel.id">
                     <td><a ui-sref="processModel.detail({id:processModel.id})">{{processModel.id}}</a></td>
                     <td>{{processModel.name}}</td>
-                    <td translate="{{'artirestApp.Status.' + processModel.status}}">{{processModel.status}}</td>
+                    <td>
+                        <span ng-class="{'label label-default': processModel.status=='DESIGNING', 'label label-success': processModel.status=='ENACTED'}">{{processModel.status}}</span>
+
+                    </td>
                     <td>{{processModel.createdAt | date:'yyyy-MM-dd HH:mm'}}</td>
                     <td>{{processModel.updatedAt | date:'yyyy-MM-dd HH:mm'}}</td>
                     <td>

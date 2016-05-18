@@ -132,6 +132,58 @@ angular.module('artirestApp')
             });
         };
 
+        $scope.newBusinessRule = function(){
+            $uibModal.open({
+                               templateUrl: 'scripts/app/entities/businessRuleModel/business-rule-dialog.html',
+                               controller: 'BusinessRuleModelDialogController',
+                               size: 'lg',
+                               resolve: {
+                                   entity: function () {
+                                       return {
+                                           name: null,
+                                           action: {name: null, service: null,transitions: []},
+                                           preConditions: [],
+                                           postConditions: []
+                                       };
+                                   },
+                                   processModel: $scope.processModel
+                               }
+                           }).result.then(function(result) {
+
+                $scope.processModel.businessRules.push(result);
+                $scope.saveBusinessRules();
+            }, function(){});
+        };
+
+        $scope.editBusinessRule = function(rule){
+            var idx = $scope.processModel.businessRules.indexOf(rule);
+
+            $uibModal.open({
+                               templateUrl: 'scripts/app/entities/businessRuleModel/business-rule-dialog.html',
+                               controller: 'BusinessRuleModelDialogController',
+                               size: 'lg',
+                               resolve: { entity: rule, processModel: $scope.processModel}
+                           }).result.then(function(result) {
+
+                $scope.processModel.businessRules[idx] = result;
+                $scope.saveBusinessRules();
+            }, function(){});
+        };
+
+        $scope.removeBusinessRule = function(rule){
+            var idx = $scope.processModel.businessRules.indexOf(rule);
+            if(idx === -1)
+                return;
+            if(!confirm("Are you sure?"))
+                return;
+            $scope.processModel.businessRules.splice(idx,1);
+            $scope.saveBusinessRules();
+        };
+
+        $scope.saveBusinessRules = function(){
+            $http.post('/api/processModels/'+$stateParams.id+'/businessRules', $scope.processModel.businessRules)
+                .then(function(res){}, function(res){});
+        };
         $scope.saveServices = function(){
           $http.post('/api/processModels/'+$stateParams.id+'/services', $scope.processModel.services)
               .then(function(res){}, function(res){});
@@ -249,5 +301,27 @@ angular.module('artirestApp')
                 initFlowchart("myDiagram-"+artifact.id);
                 loadFlowchartFromJson("myDiagram-"+artifact.id, json);
             };
+        };
+
+        $scope.conditionsToText = function(rules){
+            if(!rules) return '';
+            var text = '';
+            for(var i=0;i<rules.length;i++){
+                var atom = rules[i];
+                switch (atom.type){
+                    case 'INSTATE':
+                        text += 'Instate('+atom.artifact+',"'+atom.state+'")';
+                        break;
+                    case 'ATTRIBUTE_DEFINED':
+                        text += 'Defined('+atom.artifact+',"'+atom.attribute+'")';
+                        break;
+                    case 'SCALAR_COMPARISON':
+                        text += atom.artifact + '.' + atom.attribute + '="' + atom.value + '"';
+                }
+                if(i<rules.length-1){
+                    text += " AND ";
+                }
+            }
+            return text;
         };
     });

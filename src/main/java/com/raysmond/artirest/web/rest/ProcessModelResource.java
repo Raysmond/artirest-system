@@ -2,6 +2,7 @@ package com.raysmond.artirest.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.raysmond.artirest.domain.ArtifactModel;
+import com.raysmond.artirest.domain.BusinessRuleModel;
 import com.raysmond.artirest.domain.ProcessModel;
 import com.raysmond.artirest.domain.ServiceModel;
 import com.raysmond.artirest.service.ArtifactModelService;
@@ -100,6 +101,20 @@ public class ProcessModelResource {
             .body(result);
     }
 
+    @RequestMapping(value = "/processModels/{id}/businessRules",
+        method = RequestMethod.POST,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Transactional
+    public ResponseEntity<ProcessModel> saveBusinessRules(@RequestBody Set<BusinessRuleModel> businessRuleModels, @PathVariable String id) throws URISyntaxException {
+        ProcessModel processModel = processModelService.findOne(id);
+        processModel.businessRules = businessRuleModels;
+        ProcessModel result = processModelService.save(processModel);
+
+        return ResponseEntity.ok()
+            .headers(HeaderUtil.createEntityUpdateAlert("processModel", processModel.getId().toString()))
+            .body(result);
+    }
+
     /**
      * GET  /processModels -> get all the processModels.
      */
@@ -158,7 +173,6 @@ public class ProcessModelResource {
     @RequestMapping(value = "/processModels/{id}",
         method = RequestMethod.DELETE,
         produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
     public ResponseEntity<Void> deleteProcessModel(@PathVariable String id) {
         log.debug("REST request to delete ProcessModel : {}", id);
         processModelService.delete(id);

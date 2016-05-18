@@ -31,7 +31,7 @@
                     <span>Status</span>
                 </td>
                 <td>
-                    <span class="form-control-static" translate="{{'artirestApp.Status.' + processModel.status}}">{{processModel.status}}</span>
+                    <span ng-class="{'label label-default': processModel.status=='DESIGNING', 'label label-success': processModel.status=='ENACTED'}">{{processModel.status}}</span>
                 </td>
             </tr>
             <tr>
@@ -208,6 +208,7 @@
                             <th class="name">PreConditions</th>
                             <th class="name">PostConditions</th>
                             <th class="name">Transition</th>
+                            <th></th>
                         </tr>
                         </thead>
 
@@ -216,47 +217,68 @@
                             <td>{{rule.name}}</td>
                             <td>{{rule.action.service}}</td>
                             <td>
-                                        <ul>
-                                            <li ng-repeat="atom in rule.preConditions">
-                                                <span ng-if="atom.type =='INSTATE' ">Instate({{atom.artifact}}, {{atom.state}})</span>
-                                                <span ng-if="atom.type =='ATTRIBUTE_DEFINED' ">Defined({{atom.artifact}}, {{atom.attribute}})</span>
-                                                <span ng-if="atom.type =='SCALAR_COMPARISON'">
-                                                    {{atom.artifact}}.{{atom.attribute}}
-                                                    <span ng-if="atom.operator == 'EQUAL'">=</span>
-                                                    <span ng-if="atom.operator == 'LESS'">&lt;</span>
-                                                    <span ng-if="atom.operator == 'LARGER'">&lg;</span>
-                                                    "{{atom.value}}"
-                                                </span>
-                                            </li>
-                                        </ul>
+                                <span ng-repeat="atom in rule.preConditions">
+                                    <span ng-if="atom.type =='INSTATE' ">Instate({{atom.artifact}}, "{{atom.state}}")</span>
+                                    <span ng-if="atom.type =='ATTRIBUTE_DEFINED' ">Defined({{atom.artifact}}, "{{atom.attribute}}")</span>
+                                    <span ng-if="atom.type =='SCALAR_COMPARISON'">
+                                        {{atom.artifact}}.{{atom.attribute}}
+                                        <span ng-if="atom.operator == 'EQUAL'">=</span>
+                                        <span ng-if="atom.operator == 'LESS'">&lt;</span>
+                                        <span ng-if="atom.operator == 'LARGER'">&lg;</span>
+                                        "{{atom.value}}"
+                                    </span>
+                                    <span ng-show="!$last">&and;</span>
+                                </span>
+                                <!--<span>-->
+                                    <!--{{conditionsToText(rule.preConditions)}}-->
+                                <!--</span>-->
                             </td>
                             <td>
-                                        <ul>
-                                            <li ng-repeat="atom in rule.postConditions">
-                                                <span ng-if="atom.type =='INSTATE' ">Instate({{atom.artifact}}, {{atom.state}})</span>
-                                                <span ng-if="atom.type =='ATTRIBUTE_DEFINED' ">Defined({{atom.artifact}}, {{atom.attribute}})</span>
-                                            </li>
-                                        </ul>
+                               <span ng-repeat="atom in rule.postConditions">
+                                    <span ng-if="atom.type =='INSTATE' ">Instate({{atom.artifact}}, "{{atom.state}}")</span>
+                                    <span ng-if="atom.type =='ATTRIBUTE_DEFINED' ">Defined({{atom.artifact}}, "{{atom.attribute}}")</span>
+                                    <span ng-if="atom.type =='SCALAR_COMPARISON'">
+                                        {{atom.artifact}}.{{atom.attribute}}
+                                        <span ng-if="atom.operator == 'EQUAL'">=</span>
+                                        <span ng-if="atom.operator == 'LESS'">&lt;</span>
+                                        <span ng-if="atom.operator == 'LARGER'">&lg;</span>
+                                        "{{atom.value}}"
+                                    </span>
+                                    <span ng-show="!$last">&and;</span>
+                                </span>
                             </td>
-                            <td>
-                                <ul>
-                                    <li ng-repeat="tran in rule.action.transitions">
-                                        <span>{{tran.artifact}}.{{tran.fromState}} -> {{tran.artifact}}.{{tran.toState}}</span>
-                                    </li>
-                                </ul>
+                            <td  style="min-width: 260px;">
+                                <div ng-repeat="tran in rule.action.transitions">
+                                    <span>{{tran.artifact}}.{{tran.fromState}} &rarr; {{tran.artifact}}.{{tran.toState}}</span>
+                                </div>
+                            </td>
+                            <td style="min-width: 90px;">
+                                <button class="btn btn-sm btn-primary" ng-click="editBusinessRule(rule)">
+                                    <span class="glyphicon glyphicon-edit"></span>
+                                </button>
+                                <button class="btn btn-sm btn-danger" ng-click="removeBusinessRule(rule)">
+                                    <span class="glyphicon glyphicon-remove"></span>
+                                </button>
                             </td>
                         </tr>
                         </tbody>
                     </table>
-
+                    <div>
+                        <button class="btn btn-sm btn-primary" ng-click="newBusinessRule()">Add</button>
+                    </div>
                 </div>
             </div>
         </div>
 
         <div class="tab-item" ng-show="curTab === 'tab-4'">
             <div class="panel panel-default">
-                <div class="panel-body">
-                    <a class="btn btn-success btn-sm" ng-click="createProcessInstance()">Create Process</a>
+                <div ng-show="processModel.status=='DESIGNING'" class="panel-body">
+                    <div class="alert alert-warning">
+                        The process model is not enacted.
+                    </div>
+                </div>
+                <div ng-show="processModel.status=='ENACTED'" class="panel-body">
+                    <a  class="btn btn-success btn-sm" ng-click="createProcessInstance()">Create Process</a>
                     <table class="table table-hover table-striped">
                         <thead>
                         <th>ID</th>

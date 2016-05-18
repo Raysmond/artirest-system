@@ -1,0 +1,143 @@
+
+<form name="editForm" role="form" novalidate ng-submit="save()">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="clear()">&times;</button>
+        <h4 class="modal-title" id="myServiceLabel">Create or edit a business rule</h4>
+    </div>
+    <div class="modal-body">
+        <jh-alert-error></jh-alert-error>
+
+        <div class="form-group">
+            <label class="control-label">Name</label>
+            <input required type="text" class="form-control"
+                    ng-model="businessRule.name" required/>
+        </div>
+        <div class="form-group">
+            <label class="control-label">Service</label>
+            <input required type="text" class="form-control"
+                   ng-model="businessRule.action.service" required/>
+        </div>
+        <div class="form-group">
+            <label>PreConditions</label>
+            <div>
+                <span ng-repeat="atom in businessRule.preConditions">
+                    <span ng-if="atom.type =='INSTATE' ">Instate({{atom.artifact}}, "{{atom.state}}")</span>
+                    <span ng-if="atom.type =='ATTRIBUTE_DEFINED' ">Defined({{atom.artifact}}, "{{atom.attribute}}")</span>
+                    <span ng-if="atom.type =='SCALAR_COMPARISON'">
+                        {{atom.artifact}}.{{atom.attribute}}
+                        <span ng-if="atom.operator == 'EQUAL'">=</span>
+                        <span ng-if="atom.operator == 'LESS'">&lt;</span>
+                        <span ng-if="atom.operator == 'LARGER'">&lg;</span>
+                        "{{atom.value}}"
+                    </span>
+                    <span ng-show="!$last">&and;</span>
+                </span>
+            </div>
+            <div class="row" style="margin-top: 10px;">
+                <div class="col-sm-2">
+                    <select  class="form-control" ng-options="item as item for item in allowedArtifacts" ng-model="newRule.artifact">
+                        <option value="">-- Artifact --</option>
+                    </select>
+                </div>
+                <div class="col-sm-2">
+                    <input class="form-control" ng-model="newRule.attribute" placeholder="Attribute"/>
+                </div>
+                <div class="col-sm-2">
+                    <input class="form-control" ng-model="newRule.state" placeholder="State"/>
+                </div>
+                <div class="col-sm-2">
+                    <select  class="form-control" ng-options="item as item for item in allowedRuleType" ng-model="newRule.type">
+                        <option value="">-- Rule Type --</option>
+                    </select>
+                </div>
+                <div class="col-sm-2">
+                    <input class="form-control" ng-model="newRule.value" placeholder="Value"/>
+                </div>
+                <div class="col-sm-2">
+                    <button type="button" class="btn btn-sm btn-primary" ng-click="addNewRuleToPreConditions()">Add</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>PostConditions</label>
+            <div>
+                <span ng-repeat="atom in businessRule.postConditions">
+                    <span ng-if="atom.type =='INSTATE' ">Instate({{atom.artifact}}, "{{atom.state}}")</span>
+                    <span ng-if="atom.type =='ATTRIBUTE_DEFINED' ">Defined({{atom.artifact}}, "{{atom.attribute}}")</span>
+                    <span ng-if="atom.type =='SCALAR_COMPARISON'">
+                        {{atom.artifact}}.{{atom.attribute}}
+                        <span ng-if="atom.operator == 'EQUAL'">=</span>
+                        <span ng-if="atom.operator == 'LESS'">&lt;</span>
+                        <span ng-if="atom.operator == 'LARGER'">&lg;</span>
+                        "{{atom.value}}"
+                    </span>
+                    <span ng-show="!$last">&and;</span>
+                </span>
+            </div>
+            <div class="row" style="margin-top: 10px;">
+                <div class="col-sm-2">
+                    <select  class="form-control" ng-options="item as item for item in allowedArtifacts" ng-model="postNewRule.artifact">
+                        <option value="">-- Artifact --</option>
+                    </select>
+                </div>
+                <div class="col-sm-2">
+                    <input class="form-control" ng-model="postNewRule.attribute" placeholder="Attribute"/>
+                </div>
+                <div class="col-sm-2">
+                    <input class="form-control" ng-model="postNewRule.state" placeholder="State"/>
+                </div>
+                <div class="col-sm-2">
+                    <select class="form-control" ng-options="item as item for item in allowedRuleType" ng-model="postNewRule.type">
+                        <option value="">-- Rule Type --</option>
+                    </select>
+                </div>
+                <div class="col-sm-2">
+                    <input class="form-control" ng-model="postNewRule.value" placeholder="Value"/>
+                </div>
+                <div class="col-sm-2">
+                    <button type="button" class="btn btn-sm btn-primary" ng-click="addNewRuleToPostConditions()">Add</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Transitions</label>
+            <div>
+                <ul>
+                    <li ng-repeat="t in businessRule.action.transitions">
+                        {{t.artifact}}.{{t.fromState}} &rarr; {{t.artifact}}.{{t.toState}}
+                    </li>
+                </ul>
+            </div>
+            <div class="row" style="margin-top: 10px;">
+                <div class="col-sm-2">
+                    <select class="form-control" ng-options="item as item for item in allowedArtifacts" ng-model="newTransition.artifact">
+                        <option value="">-- Artifact --</option>
+                    </select>
+                </div>
+                <div class="col-sm-2">
+                    <input class="form-control" ng-model="newTransition.fromState" placeholder="From state"/>
+                </div>
+                <div class="col-sm-2">
+                    <input class="form-control" ng-model="newTransition.toState" placeholder="To state"/>
+
+                </div>
+                <div class="col-sm-2">
+                    <button type="button" class="btn btn-sm btn-primary" ng-click="addNewTransition()">Add</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Save</span>
+        </button>
+    </div>
+</form>
