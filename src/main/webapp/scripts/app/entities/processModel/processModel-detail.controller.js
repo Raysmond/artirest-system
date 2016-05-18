@@ -116,6 +116,7 @@ angular.module('artirestApp')
                                            inputArtifact: null,
                                            outputArtifact: null,
                                            inputParams: null,
+                                           type: 'HUMAN_TASK',
                                            id: null
                                        };
                                    }
@@ -303,25 +304,5 @@ angular.module('artirestApp')
             };
         };
 
-        $scope.conditionsToText = function(rules){
-            if(!rules) return '';
-            var text = '';
-            for(var i=0;i<rules.length;i++){
-                var atom = rules[i];
-                switch (atom.type){
-                    case 'INSTATE':
-                        text += 'Instate('+atom.artifact+',"'+atom.state+'")';
-                        break;
-                    case 'ATTRIBUTE_DEFINED':
-                        text += 'Defined('+atom.artifact+',"'+atom.attribute+'")';
-                        break;
-                    case 'SCALAR_COMPARISON':
-                        text += atom.artifact + '.' + atom.attribute + '="' + atom.value + '"';
-                }
-                if(i<rules.length-1){
-                    text += " AND ";
-                }
-            }
-            return text;
-        };
+
     });

@@ -211,7 +211,8 @@ public class ProcessService {
         Process instance = processRepository.findOne(processId);
         instance.getArtifacts().add(artifact);
 
-        // processRepository.save(instance);
+        // comment here to enable cache
+         processRepository.save(instance);
 
         return artifact;
     }
@@ -278,7 +279,8 @@ public class ProcessService {
 
         process.getArtifacts().add(artifact);
 
-        // processRepository.save(process);
+        // comment here to enable cache
+        processRepository.save(process);
 
         return artifact;
     }
@@ -443,7 +445,8 @@ public class ProcessService {
             log.debug("first business rule: {}", firstRuleSatisfied.name);
         }
 
-        // processRepository.save(process);
+        // comment here to enable cache
+        processRepository.save(process);
 
         artifact = findArtifactByName(process, artifact.getName());
 
@@ -475,7 +478,9 @@ public class ProcessService {
 
                         // Do transition
                         artifact1.setCurrentState(transition.toState);
-                        //artifactRepository.save(artifact1);
+
+                        // comment here to enable cache
+                        artifactRepository.save(artifact1);
 
                         logService.stateTransition(process.getId(), artifact1.getId(), transition.fromState, transition.toState, service.name);
                     }

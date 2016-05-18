@@ -10,7 +10,7 @@ angular.module('artirestApp').controller('ServiceDialogController',
             $scope.inputParams = $scope.service.inputParams.join(',');
         }
         $scope.allowedMethods = ["GET", "POST", "PUT", "DELETE"];
-
+        $scope.allowedServiceTypes = ['HUMAN_TASK','INVOKE_SERVICE'];
         $scope.processModelId = $stateParams.id;
 
         $scope.save = function () {

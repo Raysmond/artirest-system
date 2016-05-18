@@ -23,6 +23,10 @@
             <select class="form-control" ng-options="item as item for item in allowedMethods" ng-model="service.method"></select>
         </div>
         <div class="form-group">
+            <label class="control-label">Type</label>
+            <select class="form-control" ng-options="item as item for item in allowedServiceTypes" ng-model="service.type"></select>
+        </div>
+        <div class="form-group">
             <label class="control-label">Url</label>
             <input type="text" class="form-control" name="url"
                    ng-model="service.url"/>

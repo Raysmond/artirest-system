@@ -21,7 +21,7 @@ spring:
     data:
         mongodb:
 #            host: artirest-mongodb
-            host: 127.0.0.1
+            host: 10.131.245.176
             port: 27017
             database: artirest
     mail:

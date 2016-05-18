@@ -36,19 +36,15 @@ angular.module('artirestApp')
             $http.get('/api/processes/'+$stateParams.id+'/processLogs')
                 .then(function(res){
                     $scope.logs = res.data;
+                    for (var i = 0; i < $scope.process.artifacts.length; i++) {
+                        var artifact = $scope.process.artifacts[i];
+
+                        $scope.showArtifactLifeCycle(artifact, $scope.logs);
+                    }
                 }, function(res){
                     alert('Failed to load process logs');
                 });
         };
-
-        $scope.$watch('logs', function(){
-            for (var i = 0; i < $scope.process.artifacts.length; i++) {
-                var artifact = $scope.process.artifacts[i];
-
-                $scope.showArtifactLifeCycle(artifact, $scope.logs);
-            }
-        });
-
 
         var unsubscribe = $rootScope.$on('artirestApp:processUpdate', function(event, result) {
             $scope.process = result;
@@ -149,7 +145,7 @@ angular.module('artirestApp')
 
             for (var i = 0; i < states.length; i++) {
                 if(states[i].name == stateName){
-                    return states[i].comment;
+                    return states[i].name;
                 }
             };
 
@@ -202,7 +198,8 @@ angular.module('artirestApp')
             if (transitions.length == 0) {
                 var startNode = {
                     key: key++,
-                    text: $scope.findStateComment(artifact, "start"),
+                    //text: $scope.findStateComment(artifact, "Start"),
+                    text: 'Start',
                     loc: "" + x+ " " + y,
                     category: 'Start'
                 };
@@ -212,16 +209,18 @@ angular.module('artirestApp')
 
             for (var i = 0; i < transitions.length; i++) {
                 var transition = transitions[i];
-                if (transition.from == "start") {
+                if (transition.from == "Start") {
                     var startNode = {
                         key: key++,
-                        text: $scope.findStateComment(artifact, transition.from),
+                        //text: $scope.findStateComment(artifact, transition.from),
+                        text: transition.from,
                         loc: "" + x+ " " + y,
                         category: 'Start'
                     }
                     var secondNode = {
                         key: key++,
-                        text: $scope.findStateComment(artifact, transition.to),
+                        //text: $scope.findStateComment(artifact, transition.to),
+                        text: transition.to,
                         loc: "" + (x+120) + " "+ y
                     };
 
@@ -260,7 +259,7 @@ angular.module('artirestApp')
                         transition = transitions[i];
                         var node = {
                             key: key++,
-                            text: stateModel.comment,
+                            text: stateModel.name,
                             loc: "" + (x+120)+ " "+y
                         };
 

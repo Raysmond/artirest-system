@@ -39,21 +39,35 @@ angular.module('artirestApp').controller('BusinessRuleModelDialogController',
         };
         $scope.addNewRuleToPreConditions = function(){
             $scope.addNewRule($scope.businessRule.preConditions, $scope.newRule);
+            $scope.newRule = {
+                type:null,
+                artifact: null,
+                attribute: null,
+                state: null,
+                value: null
+            };
         };
         $scope.addNewRuleToPostConditions = function(){
             $scope.addNewRule($scope.businessRule.postConditions, $scope.postNewRule);
+            $scope.postNewRule = {
+                type:null,
+                artifact: null,
+                attribute: null,
+                state: null,
+                value: null
+            };
         };
 
         $scope.addNewRule = function(conditions, rule){
             if(rule.type && rule.artifact){
-                conditions.push(rule);
-                rule = {
-                    type:null,
-                    artifact: null,
-                    attribute: null,
-                    state: null,
-                    value: null
+                var newRule = {
+                    type:rule.type,
+                    artifact: rule.artifact,
+                    attribute: rule.attribute,
+                    state: rule.state,
+                    value: rule.value
                 };
+                conditions.push(newRule);
             }
         };
 

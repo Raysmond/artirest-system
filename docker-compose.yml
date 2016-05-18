@@ -10,11 +10,11 @@ interlock:
 web:
     image: raysmond/artirest:0.0.1
     # mem_limit: 3G
-    environment:
-      - INTERLOCK_DATA={"hostname":"local","domain":"artirest.com","balance_algorithm":"uri depth 3"}
-      - SPRING_PROFILES_ACTIVE=prod
+    #environment:
+    #  - INTERLOCK_DATA={"hostname":"local","domain":"artirest.com","balance_algorithm":"uri depth 3"}
+    #  - SPRING_PROFILES_ACTIVE=prod
     ports:
-      - "8080"
+      - "9000:8080"
     links:
       - mongo:artirest-mongodb
       - redis:artirest-redis

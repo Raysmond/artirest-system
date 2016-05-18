@@ -149,11 +149,12 @@ function initFlowchart(name) {
                                       //   { margin: 5, font: "bold 11pt Helvetica, Arial, sans-serif", stroke: lightText })
                                       $(go.TextBlock,
                                         {
-                                            margin: 5,
                                             font: "10pt Helvetica, Arial, sans-serif",
-                                            stroke: lightText ,
+                                            stroke: lightText,
+                                            margin: 12,
                                             maxSize: new go.Size(80, NaN),
-
+                                            wrap: go.TextBlock.WrapFit,
+                                            editable: true
                                         },
                                         new go.Binding("text", "text").makeTwoWay())
                                     ),
