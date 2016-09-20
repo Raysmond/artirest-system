@@ -22,53 +22,73 @@ angular.module('artirestApp').controller('BusinessRuleModelDialogController',
         }
 
         $scope.allowedRuleType = ["INSTATE","ATTRIBUTE_DEFINED","SCALAR_COMPARISON"];
-
+        $scope.allowedOperators = ["EQUAL","LARGER","LESS"];
         $scope.newRule = {
             type:null,
             artifact: null,
             attribute: null,
             state: null,
-            value: null
+            value: null,
+            operator: null
         };
         $scope.postNewRule = {
             type:null,
             artifact: null,
             attribute: null,
             state: null,
-            value: null
+            value: null,
+            operator: null
         };
         $scope.addNewRuleToPreConditions = function(){
-            $scope.addNewRule($scope.businessRule.preConditions, $scope.newRule);
+            $scope.addNewRule($scope.businessRule.preConditions, $scope.newRule, $scope.editNewPreRuleIdx);
             $scope.newRule = {
                 type:null,
                 artifact: null,
                 attribute: null,
                 state: null,
-                value: null
+                value: null,
+                operator: null
             };
+            $scope.editNewPreRuleIdx = -1;
         };
         $scope.addNewRuleToPostConditions = function(){
-            $scope.addNewRule($scope.businessRule.postConditions, $scope.postNewRule);
+            $scope.addNewRule($scope.businessRule.postConditions, $scope.postNewRule, $scope.editNewPostRuleIdx);
             $scope.postNewRule = {
                 type:null,
                 artifact: null,
                 attribute: null,
                 state: null,
-                value: null
+                value: null,
+                operator: null
             };
+            $scope.editNewPostRuleIdx = -1;
         };
 
-        $scope.addNewRule = function(conditions, rule){
+        $scope.addNewRule = function(conditions, rule, index){
             if(rule.type && rule.artifact){
                 var newRule = {
                     type:rule.type,
                     artifact: rule.artifact,
                     attribute: rule.attribute,
                     state: rule.state,
-                    value: rule.value
+                    value: rule.value,
+                    operator: rule.operator
                 };
-                conditions.push(newRule);
+                if(index===-1)
+                    conditions.push(newRule);
             }
+        };
+
+        $scope.editNewPreRuleIdx = -1;
+        $scope.editPreAtom = function(atom){
+            $scope.newRule = atom;
+            $scope.editNewPreRuleIdx = $scope.businessRule.preConditions.indexOf(atom);
+        };
+
+        $scope.editNewPostRuleIdx = -1;
+        $scope.editPostAtom = function(atom){
+            $scope.postNewRule = atom;
+            $scope.editNewPostRuleIdx = $scope.businessRule.postConditions.indexOf(atom);
         };
 
         $scope.newTransition ={

@@ -32,6 +32,7 @@
                         <span ng-if="atom.operator == 'LARGER'">&lg;</span>
                         "{{atom.value}}"
                     </span>
+                    <a ng-click="editPreAtom(atom)"><span class="glyphicon glyphicon-edit"></span></a>
                     <span ng-show="!$last">&and;</span>
                 </span>
             </div>
@@ -51,6 +52,7 @@
                     <select  class="form-control" ng-options="item as item for item in allowedRuleType" ng-model="newRule.type">
                         <option value="">-- Rule Type --</option>
                     </select>
+                    <select ng-show="newRule.type=='SCALAR_COMPARISON'" class="form-control" ng-options="item as item for item in allowedOperators" ng-model="newRule.operator"></select>
                 </div>
                 <div class="col-sm-2">
                     <input class="form-control" ng-model="newRule.value" placeholder="Value"/>
@@ -74,6 +76,7 @@
                         <span ng-if="atom.operator == 'LARGER'">&lg;</span>
                         "{{atom.value}}"
                     </span>
+                    <a ng-click="editPostAtom(atom)"><span class="glyphicon glyphicon-edit"></span></a>
                     <span ng-show="!$last">&and;</span>
                 </span>
             </div>
@@ -93,6 +96,7 @@
                     <select class="form-control" ng-options="item as item for item in allowedRuleType" ng-model="postNewRule.type">
                         <option value="">-- Rule Type --</option>
                     </select>
+                    <select ng-show="postNewRule.type=='SCALAR_COMPARISON'" class="form-control" ng-options="item as item for item in allowedOperators" ng-model="postNewRule.operator"></select>
                 </div>
                 <div class="col-sm-2">
                     <input class="form-control" ng-model="postNewRule.value" placeholder="Value"/>
