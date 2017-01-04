@@ -21,8 +21,8 @@ We use [Grunt][] as our build system. Install the grunt command-line tool global
 
 Run the following command in a terminal:
 
-    export PATH=$PATH:$Nodejs＿HOME/bin
-    
+    export  PATH=$PATH:$Nodejs＿HOME/bin
+   
     ./gradlew
 
 Run the following commands in another separate terminal to create a blissful development experience where your browser
