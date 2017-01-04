@@ -20,11 +20,13 @@ We use [Grunt][] as our build system. Install the grunt command-line tool global
     npm install -g grunt-cli
 
 Run the following command in a terminal:
+
     export PATH=$PATH:$Nodejs＿HOME/bin
     ./gradlew
 
 Run the following commands in another separate terminal to create a blissful development experience where your browser
 auto-refreshes when files change on your hard drive.
+
     grunt
 
 Bower is used to manage CSS and JavaScript dependencies used in this application. You can upgrade dependencies by
