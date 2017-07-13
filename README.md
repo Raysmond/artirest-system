@@ -7,6 +7,9 @@ Before you can build this project, you must install and configure the following 
 1. [Node.js][]: We use Node to run a development web server and build the project.
    Depending on your system, you can install Node either from source or as a pre-packaged bundle.
 
+2. MongoDB
+3. Redis
+
 After installing Node, you should be able to run the following command to install development tools (like
 [Bower][] and [BrowserSync][]). You will only need to run this command when dependencies change in package.json.
 
@@ -16,10 +19,15 @@ We use [Grunt][] as our build system. Install the grunt command-line tool global
 
     npm install -g grunt-cli
 
-Run the following commands in two separate terminals to create a blissful development experience where your browser
+Run the following command in a terminal:
+
+    export  PATH=$PATH:$Nodejs＿HOME/bin
+   
+    ./gradlew
+
+Run the following commands in another separate terminal to create a blissful development experience where your browser
 auto-refreshes when files change on your hard drive.
 
-    ./gradlew
     grunt
 
 Bower is used to manage CSS and JavaScript dependencies used in this application. You can upgrade dependencies by
