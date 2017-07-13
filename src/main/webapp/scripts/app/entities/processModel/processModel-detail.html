@@ -103,9 +103,14 @@
                                         <span>{{attr.name}}</span>
                                         <input style="display: none;" type="text" class="form-control" ng-model="attr.name" />
                                     </td>
-                                    <td class="type" style="width: 200px;">
+                                    <td class="type" style="width: 300px;">
                                         <span>{{attr.type}}</span>
+                                        <span ng-show="attr.type == 'Function'"><br/> <code>= {{attr.function}}</code></span>
                                         <select style="display: none;" class="form-control" ng-options="item as item for item in attrTypes" ng-model="attr.type"></select>
+                                        <input style="display: none;margin-top: 5px;"
+                                               ng-model="attr.function"
+                                               placeholder="Function"
+                                               ng-show="attr.type == 'Function'" type="text" class="form-control" />
                                     </td>
                                     <td class="comment">
                                         <span>{{attr.comment}}</span>
@@ -126,6 +131,12 @@
                                     </td>
                                     <td>
                                         <select  class="form-control" ng-options="item as item for item in attrTypes" ng-model="newAttr.type"></select>
+                                        <input style="margin-top: 5px;"
+                                               placeholder="Function"
+                                               ng-model="newAttr.function"
+                                               ng-show="newAttr.type == 'Function'"
+                                               type="text" class="form-control" />
+
                                     </td>
                                     <td>
                                         <input class="form-control" type="text" ng-model="newAttr.comment" placeholder="Comment" />
@@ -140,6 +151,37 @@
                             <div id="myPalette-myDiagram-{{artifact.id}}" style="border: solid 1px #ccc; height: 100px;" ></div>
                             <div id="myDiagram-{{artifact.id}}" style="border: solid 1px #ccc; height: 300px"></div>
 
+                            <hr/>
+
+                            <!--状态条件-->
+                            <strong>State constraints</strong>
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <td>Name</td>
+                                        <td>Type</td>
+                                        <td>Conditions</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="state in artifact.states">
+                                    <td>{{state.name}}</td>
+                                    <td>{{state.type}}</td>
+                                    <td>
+                                        <input type="text" ng-model="state.conditions" class="form-control" />
+                                    </td>
+                                </tr>
+                                </tbody>
+
+                            </table>
+                            <ul>
+                                <li>
+                                    <span style="font-size:12px;">Use <code>and</code> to join conditions.</span>
+                                </li>
+                                <li>
+                                    <span style="font-size:12px;">Reference to attributes of an artifact. e.g. </span> <code>x = 10 and b < 100</code>
+                                </li>
+                            </ul>
                             <hr>
                             <button class="btn btn-sm btn-primary" type="button" ng-click="saveEditArtifact(artifact)">Save</button>
 

@@ -16,8 +16,30 @@ public class AttributeModel implements Serializable {
 
     private String type;
 
+    // 函数
+    private String function;
+
+    // 绑定WOT
+    private String wot;
+
     public AttributeModel() {
 
+    }
+
+    public String getFunction() {
+        return function;
+    }
+
+    public void setFunction(String function) {
+        this.function = function;
+    }
+
+    public String getWot() {
+        return wot;
+    }
+
+    public void setWot(String wot) {
+        this.wot = wot;
     }
 
     public AttributeModel(String name, String type, String comment) {

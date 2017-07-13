@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('artirestApp')
-    .controller('ProcessModelController', function ($scope, $state, ProcessModel, ParseLinks) {
+    .controller('ProcessModelController', function ($scope,$http, $state, ProcessModel, ParseLinks) {
 
         $scope.processModels = [];
         $scope.predicate = 'id';
@@ -20,6 +20,14 @@ angular.module('artirestApp')
         };
         $scope.loadAll();
 
+        $scope.createLoanProcess = function(){
+            $http.post('/api/processModels/create_test_models?model=loan',{})
+                .then(function(res){
+                    $scope.loadAll();
+                }, function(err){
+                    alert('create test model failed.');
+                });
+        };
 
         $scope.refresh = function () {
             $scope.loadAll();

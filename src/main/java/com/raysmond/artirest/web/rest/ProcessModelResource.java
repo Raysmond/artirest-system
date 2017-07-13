@@ -155,9 +155,9 @@ public class ProcessModelResource {
         ProcessModel processModel = null;
 
         if (model != null && model.equals("loan")) {
-            processCreateService.createLoanProcessModel();
+            processModel = processCreateService.createLoanProcessModel();
         } else {
-            processCreateService.createOrderProcessModel();
+            processModel = processCreateService.createOrderProcessModel();
         }
 
         return Optional.ofNullable(processModel)

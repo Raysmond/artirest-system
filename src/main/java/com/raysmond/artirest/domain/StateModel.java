@@ -19,6 +19,9 @@ public class StateModel implements Serializable{
 
     public StateType type;
 
+    // 状态满足的条件 以 and 分割
+    public String conditions;
+
     @XmlRootElement
     public static enum StateType {
         START, NORMAL, FINAL
